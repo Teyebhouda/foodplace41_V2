@@ -119,7 +119,7 @@
                 <p class="price">
                   {{ $product->prix }} DT
                 </p>
-                <a href="{{ route('panier.add', ['subdomain' => $subdomain, 'productId' => $product->id]) }}" class="btn-book-a-table">Add to Panier</a>
+                <a href="{{ route('panier.add', ['productId' => $product->id]) }}" class="btn-book-a-table">Add to Panier</a>
 
               </div><!-- Menu Item -->
 

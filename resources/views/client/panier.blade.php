@@ -51,7 +51,7 @@
                                     </td>
                                     <td>{{ $item['product']['categorie_id'] }}</td>
                                     <td style="display: flex; justify-content: space-between;">
-                                        <form action="{{ route('panier.remove', ['subdomain' => $subdomain, 'productId' => $item['product']['id']]) }}" method="POST">
+                                        <form action="{{ route('panier.remove', ['productId' => $item['product']['id']]) }}" method="POST">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-danger delBtn">Remove</button>
@@ -63,7 +63,7 @@
                         </tbody>
                     </table>
                     @if (count($cartItems) > 0)
-                        <form action="{{ route('panier.confirm', ['subdomain' => $subdomain]) }}" method="POST">
+                        <form action="{{ route('panier.confirm') }}" method="POST">
                             @csrf
                             <button type="submit" class="btn btn-success">Confirm Panier</button>
                         </form>

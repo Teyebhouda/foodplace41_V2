@@ -15,8 +15,8 @@ class Kernel extends HttpKernel
      */
     protected $middleware = [
         // \App\Http\Middleware\TrustHosts::class,
-        \App\Http\Middleware\SubdomainRedirect::class,
-        \App\Http\Middleware\CheckSubdomain::class,
+       // \App\Http\Middleware\SubdomainRedirect::class,
+       
         \App\Http\Middleware\TrustProxies::class,
         \Illuminate\Http\Middleware\HandleCors::class,
         \App\Http\Middleware\PreventRequestsDuringMaintenance::class,
@@ -69,7 +69,7 @@ class Kernel extends HttpKernel
 
     protected $routeMiddleware = [
         'admin' => \App\Http\Middleware\AdminMiddleware::class,
-        'check.subdomain' => \App\Http\Middleware\CheckSubdomain::class,
+      
         'validatePostalCode' => \App\Http\Middleware\ValidatePostalCodeMiddleware::class,
     ];
 }

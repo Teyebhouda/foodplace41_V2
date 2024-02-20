@@ -6,19 +6,26 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\Client;
+use App\Models\LivraisonRestaurant;
 
 
 
 class ClientLoginController extends Controller
 {
 
-    public function showLoginForm(Request $request)
-    {
-        $subdomain = $request->getHost();
-        $subdomain = preg_replace('/:\d+$/', '', $subdomain).':8000'; 
+  public function showLoginForm()
+{
+
+    $restaurant_id = env('Restaurant_id');
+    $client = Client::where('id', $restaurant_id)->firstOrFail();
+	$livraisons = LivraisonRestaurant::where('restaurant_id', $restaurant_id)->get();
+ //dd($client->reservation_table);
+   
+      
         $cart = session()->get('cart', []);
-        return view('client.login',compact('subdomain','cart'));
-    }
+        return view('client.login', compact('client', 'cart', 'livraisons'));
+   
+}
     public function showRegistrationForm()
     {
         return view('client.register');
@@ -38,7 +45,7 @@ class ClientLoginController extends Controller
 
         // Authentication failed
         return redirect()->back()->withInput()->withErrors([
-            'email' => 'Invalid credentials.',
+            'email' => 'Email ou Mot de passe non valides.',
         ]);
     }
 
@@ -50,10 +57,7 @@ class ClientLoginController extends Controller
     }
     public function register(Request $request)
     {
-        $sub = $request->getHost();
-        $subdomainVerif = preg_replace('/:\d+$/', '', $sub).':8000'; 
-        $client = Client::where('url_platform', $subdomainVerif)->firstOrFail();
-        $restaurant_id = $client->id;
+        $restaurant_id = env('Restaurant_id');
         $request->validate([
             'name' => 'required',
             'email' => 'required|email|unique:basic_users,email',

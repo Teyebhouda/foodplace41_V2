@@ -20,11 +20,11 @@ use Illuminate\Support\Facades\Auth;
 
 class ClientStoreController extends Controller
 {
-    public function index($subdomain)
+    public function index()
     {
         $user = Auth::user();
         $cartItems = session()->get('cartItems', []);
-        return view('client.panier', compact('cartItems', 'subdomain'));
+        return view('client.panier', compact('cartItems'));
     }
 
     public function store()
@@ -33,7 +33,7 @@ class ClientStoreController extends Controller
         return view('client.index', compact('produits'));
     }
 
-    public function addToCart($subdomain, $productId)
+    public function addToCart($productId)
     {
         // Retrieve the product based on the $productId
         $product = Produits::find($productId);
@@ -68,21 +68,21 @@ class ClientStoreController extends Controller
         session()->put('cartItems', $cartItems);
     
         // Redirect back or to the cart page
-        return redirect()->route('panier.show', ['subdomain' => $subdomain]);
+        return redirect()->route('panier.show');
     }
     
     
-    public function confirmPanier($subdomain)
+    public function confirmPanier()
     {
         // Retrieve the cart items from the session
         $cartItems = session()->get('cartItems', []);
 
-        $allsubdomain = $subdomain . '.localhost:8000';
+        $restaurant_id = env('Restaurant_id');
 
         // Create a new cart
         $cart = new CarteUser();
         $cart->user_id = Auth::id();
-        $idRestaurant = Client::where('url_platform', $allsubdomain)->value('user_id');
+        $idRestaurant = Client::where('id', $restaurant_id)->value('user_id');
         $cart->restaurant_id = $idRestaurant;
         $cart->save();
 
@@ -107,17 +107,20 @@ class ClientStoreController extends Controller
         session()->forget('cartItems');
 
         // Redirect to a success page or any other appropriate action
-        return redirect()->route('panier.confirmation', ['subdomain' => $subdomain]);
+        return redirect()->route('panier.confirmation');
     }
 
  
-    public function getProductRestaurantDetails($subdomain, $productId)
+    public function getProductRestaurantDetails($productId)
     {
         // Retrieve the product details from the database based on the $productId
         $product = ProduitsRestaurants::find($productId);
 
         // Retrieve the product's famille options
-        $familleOptions = ProduitsFOptionsrestaurant::where('id_produit_rest', $productId)->get();
+       $familleOptions = ProduitsFOptionsrestaurant::where('id_produit_rest', $productId)
+    ->orderBy('RowN') // Add this line to sort by RowN
+    ->get();
+
 
         // Retrieve the options for each famille option
         foreach ($familleOptions as $familleOption) {
@@ -127,7 +130,7 @@ class ClientStoreController extends Controller
         foreach ($familleOptions as $familleOption) {
             $familleOption->famille_option = familleOptionsRestaurant::find($familleOption->id_familleoptions_rest);
         }
-
+//dd($product);
         // Return the product details as a JSON response
         return response()->json([
             'product' => $product,
@@ -138,14 +141,14 @@ class ClientStoreController extends Controller
     {
         return session('cart_id');
     }
-    public function show($subdomain)
+    public function show()
     {
         $cartItems = session()->get('cartItems', []);
         $cartItemCount = count($cartItems);
-        return view('client.panier', compact('cartItems', 'cartItemCount', 'subdomain'));
+        return view('client.panier', compact('cartItems', 'cartItemCount'));
     }
 
-    public function removeFromCart(Request $request, $subdomain, $productId)
+    public function removeFromCart(Request $request, $productId)
     {
         $cartItems = session()->get('cartItems', []);
 
@@ -162,11 +165,11 @@ class ClientStoreController extends Controller
                 // Update the cart items in the session
                 session()->put('cartItems', $cartItems);
 
-                return redirect()->route('panier.show', ['subdomain' => $subdomain])->with('success', 'Produit supprimé avec succès.');
+                return redirect()->route('panier.show')->with('success', 'Produit supprimé avec succès.');
             }
         }
 
-        return redirect()->route('panier.show', ['subdomain' => $subdomain])->with('error', 'Erreur de supprimer le produit.');
+        return redirect()->route('panier.show')->with('error', 'Erreur de supprimer le produit.');
     }
 
     

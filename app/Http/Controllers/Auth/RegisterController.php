@@ -73,11 +73,11 @@ class RegisterController extends Controller
             'password' => 'required|min:8|confirmed',
             'phone_num' => 'required',
         ]);
-///////
-    $subdomain = $request->getHost();
-    $subdomain = preg_replace('/:\d+$/', '', $subdomain).':8000'; 
-    $client = Client::where('url_platform', $subdomain)->first();
-////////
+
+$restaurant_id = env('Restaurant_id');
+
+    $client = Client::where('id', $restaurant_id)->first();
+
 dd($client->user_id);
         $userData = [
             'name' => $request->name,

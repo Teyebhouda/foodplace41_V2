@@ -19,18 +19,21 @@ class ClientController extends BaseController
 {
 
 
-    public function index($subdomain)
+    public function index()
     {
-        $client = Client::where('url_platform', strtolower($subdomain . '.localhost:8000'))->firstOrFail();
+        $restaurant_id = env('Restaurant_id');
+//dd($restaurant_id);
+        $client = Client::where('id', $restaurant_id)->firstOrFail();
         if ($client->status != 1) {
             abort(404);
         }
-        $clients = Client::where('url_platform', $client->url_platform)->get();
+        $clients = Client::where('id', $restaurant_id)->get();
         return view('admin.clients.index', compact('client', 'clients'));
     }
 
     public function clientsRestaurant()
     {
+      
         $userId = Auth::id(); // Get the ID of the logged-in user
         $users = User::where('restaurant_id', function ($query) use ($userId) {
             $query->select('id')
@@ -106,7 +109,6 @@ class ClientController extends BaseController
         'phoneNum2' => $request->phoneNum2,
         'localisation' => $request->localisation,
         'logo' => $imageUrl,
-        'url_platform' => $nameWithoutSpaces . '.localhost:8000',
         'date' => date('Y-m-d H:i:s'),
         'status' => '1',
         'N_Siret' => $request->N_Siret,
@@ -266,21 +268,6 @@ class ClientController extends BaseController
     
     
 
-    // Generate a unique URL based on the given name
-    private function generateUniqueUrl($name)
-    {
-        $baseDomain = 'localhost:8000';
-        $url = strtolower(str_replace(' ', '', $name));
-        $suffix = '';
-        $counter = 1;
-
-        while (Client::where('url_platform', $url . $suffix)->exists()) {
-            $suffix = $counter;
-            $counter++;
-        }
-
-        return $url . $suffix . '.' . $baseDomain;
-    }
 
 
 

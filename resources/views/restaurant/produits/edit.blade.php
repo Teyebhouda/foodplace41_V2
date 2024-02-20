@@ -13,7 +13,6 @@
             <!-- partial -->
             <div class="main-panel">
                 <div class="content-wrapper">
-                    @include('restaurant.stat')
                     <div class="row">
                         <div class="col-12 grid-margin">
                             <div class="card">
@@ -36,18 +35,19 @@
                                             </div>
                                             <div class="form-group">
                                                 <label for="description">Description:</label>
-                                                <input type="text" name="description" value="{{ $produit->description }}" required class="form-control">
+                                                <input type="text" name="description" value="{{ $produit->description }}"  class="form-control">
                                             </div>
                                             <div class="form-group">
-                                                <img id="produitImage" src="{{ asset($produit->url_image) }}" alt="Produit Image">
+                                                <img id="produitImage" src="{{ asset($produit->url_image) }}" alt="Produit Image" style="width:700px;height:400px;">
                                             </div>
                                             <div class="form-group">
                                                 <label for="image">Image:</label>
-                                                <input type="file" name="image" accept="image/*" class="form-control">
+                                                <input type="file" name="image" accept="image/*" class="form-control" >
                                             </div>
                                             <div class="form-group">
                                                 <label for="prix">Prix:</label>
-                                                <input type="number" name="prix" value="{{ $produit->prix }}" required class="form-control">
+                                                <input type="text" name="prix" value="{{ $produit->prix }}" class="form-control"                                                 required pattern="^\d+(\.\d{1,2})?$" 			
+									           title="Veuillez entrer un nombre valide avec jusqu'à deux décimales (par exemple, 9,90)">
                                             </div>
                                             <div class="form-group">
                                                 <label for="categorie_id">Categorie:</label>

@@ -9,19 +9,23 @@ use App\Models\User;
 use App\Models\Client;
 use App\Models\ProduitsRestaurants;
 use App\Models\CategoriesRestaurant;
+use App\Models\LivraisonRestaurant;
 use App\Models\familleOptionsRestaurant;
 use App\Models\UserProduct;
 use Illuminate\Pagination\Paginator;
 class ProductsController  extends controller
 {
 
-    public function index($subdomain)
+    public function index()
     {
-        $sub = $subdomain . '.localhost:8000';
-        $client = Client::where('url_platform', $sub)->firstOrFail();
-    
+        $restaurant_id = env('Restaurant_id');
+
+        $client = Client::where('id', $restaurant_id)->firstOrFail();
+   
         // Retrieve the categories that exist in the produits table
-        $categories = CategoriesRestaurant::where('restaurant_id', $client->id)->get();
+        $categories = CategoriesRestaurant::where('restaurant_id', $restaurant_id)->get();
+		
+		$livraisons = LivraisonRestaurant::where('restaurant_id', $restaurant_id)->get();
         $categoryIds = $categories->pluck('id')->toArray();
     
         // Retrieve the first product for each category
@@ -35,21 +39,21 @@ class ProductsController  extends controller
             Paginator::defaultView('client.layouts.custom-paginator');
     
         // Retrieve the products from the produits table with matching IDs
-        $products = ProduitsRestaurants::whereIn('categorie_rest_id', $categoryIds)->where('status', 1)->where('restaurant_id', $client->id)->get();
+        $products = ProduitsRestaurants::whereIn('categorie_rest_id', $categoryIds)->where('status', 1)->where('restaurant_id', $restaurant_id)->get();
      
     // Pagination
     $currentPage = LengthAwarePaginator::resolveCurrentPage();
     $perPage = 1000; // Number of products per page
     $currentPageProducts = $products->forPage($currentPage, $perPage);
     $paginator = new LengthAwarePaginator($currentPageProducts, $products->count(), $perPage);
-    $paginator->setPath(route('client.products.index', ['subdomain' => $subdomain]));
+    $paginator->setPath(route('client.products.index'));
 
         // Retrieve the famille options for the products
         $familleOptions = familleOptionsRestaurant::whereIn('categorie_rest_id', $categoryIds)->with('options')->get();
     
         $cart = session()->get('cart', []);
     
-        return view('client.index', compact('client', 'products', 'categories', 'subdomain', 'firstProducts', 'familleOptions', 'cart', 'paginator'));
+        return view('client.index', compact('client', 'products', 'categories', 'livraisons', 'firstProducts', 'familleOptions', 'cart', 'paginator'));
     }
     
 

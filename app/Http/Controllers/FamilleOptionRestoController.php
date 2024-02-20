@@ -8,6 +8,12 @@ use App\Models\familleOptionsRestaurant;
 use App\Models\User;
 use App\Models\OptionsRestaurant;
 use Illuminate\Support\Facades\Auth;
+
+use App\Models\Client;
+use App\Models\ClientRestaurat;
+use App\Models\ProduitsRestaurants;
+use App\Models\Command;
+
 class FamilleOptionRestoController extends Controller
 {
     /**
@@ -16,21 +22,27 @@ class FamilleOptionRestoController extends Controller
     public function index()
     {
        
-            $userId = Auth::id();
-            $user = User::find($userId);
-            if ($user) {
+        $restaurant_id = env('Restaurant_id');
+
             
-            $restaurant = $user->restaurant;
+           
      
-            $familleOptions = FamilleOptionsRestaurant::where('restaurant_id', $restaurant->id)->paginate(10);
-            return view('restaurant.famille-options.index', compact('familleOptions'));
+            $familleOptions = FamilleOptionsRestaurant::where('restaurant_id', $restaurant_id)->get();
+				
+					// stats
+			
+		$clientCount = ClientRestaurat::where('restaurant_id', $restaurant_id)->count();
+		$produitsCount = ProduitsRestaurants::where('restaurant_id', $restaurant_id) ->count();
+		$commandeCount = Command::where('restaurant_id', $restaurant_id)->count();
+		$NouveauCommandeCount = Command::where('restaurant_id', $restaurant_id)
+            ->where('statut', 'Nouveau')
+            ->count();
+				
+				
+            return view('restaurant.famille-options.index', compact('familleOptions', 'clientCount','commandeCount', 'NouveauCommandeCount', 'produitsCount'));
       
         
-        } else {
-            // Handle the case when the user does not have a restaurant
-            // For example, you can redirect to a page or show an error message
-            return redirect()->back();
-        }
+      
     }
 
     /**
@@ -54,11 +66,8 @@ class FamilleOptionRestoController extends Controller
     public function store(Request $request)
     {
 
-        $userId = Auth::id();
-        $user = User::find($userId);
-        if ($user) {
-        
-        $restaurant = $user->restaurant;
+        $restaurant_id = env('Restaurant_id');
+
      
  
         $request->validate([
@@ -70,15 +79,11 @@ class FamilleOptionRestoController extends Controller
         $familleOption->nom_famille_option = $request->input('nom_famille_option');
         $familleOption->type = $request->input('type');
        
-        $familleOption->restaurant_id =  $restaurant->id ;
+        $familleOption->restaurant_id =  $restaurant_id ;
         $familleOption->save();
 
         return redirect()->route('restaurant.famille-options.index')->with('success', 'Famille option ajoutée  avec succès!');
-    } else {
-        // Handle the case when the user does not have a restaurant
-        // For example, you can redirect to a page or show an error message
-        return redirect()->back();
-    }
+   
     }
    
 
@@ -128,7 +133,7 @@ class FamilleOptionRestoController extends Controller
         $familleOption->save();
         
         // Redirect back with success message
-        return redirect()->back()->with('success', 'Famille Option modifiée  avec succès.');
+        return redirect()->route('restaurant.famille-options.index')->with('success', 'Famille Option modifiée  avec succès.');
     }
     
 

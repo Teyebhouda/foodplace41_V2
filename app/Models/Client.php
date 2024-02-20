@@ -28,6 +28,7 @@ class Client extends Model
         'N_Siret',
         'N_Tva',
         'user_id',
+		'reservation_table',
     ];
     public function user()
     {

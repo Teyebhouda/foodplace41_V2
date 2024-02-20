@@ -12,6 +12,10 @@ use App\Models\familleOptionsRestaurant;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
+use App\Models\Client;
+use App\Models\ClientRestaurat;
+use App\Models\Command;
+
 class ProduitsRestoController extends Controller
 {
     /**
@@ -20,45 +24,50 @@ class ProduitsRestoController extends Controller
     public function index()
     {
 
-        $userId = Auth::id();
-        $user = User::find($userId);
-        if ($user) {
-        $restaurant = $user->restaurant;
-        $products  = ProduitsRestaurants::where('restaurant_id', $restaurant->id)
-        ->with('categories')
-        ->paginate(10);
-      
+        $restaurant_id = env('Restaurant_id');
+
+      $products = ProduitsRestaurants::where('restaurant_id', $restaurant_id)
+                ->with('categories')
+                ->get();
       /*   foreach ($produits as $produit) {
               // Check if the product is selected for the user
               $produit->is_selected = $user->userProducts()->where('product_id', $produit->id)->exists();
           }*/
+			// stats
+			
+		$clientCount = ClientRestaurat::where('restaurant_id', $restaurant_id)->count();
+		$produitsCount = ProduitsRestaurants::where('restaurant_id', $restaurant_id) ->count();
+		$commandeCount = Command::where('restaurant_id', $restaurant_id)->count();
+		$NouveauCommandeCount = Command::where('restaurant_id', $restaurant_id)
+            ->where('statut', 'Nouveau')
+            ->count();
+
       
-          return view('restaurant.produits.index', compact('products'));
+          return view('restaurant.produits.index', compact('products', 'clientCount','commandeCount', 'NouveauCommandeCount', 'produitsCount'));
       
-    }else {
-        // Handle the case when the user does not have a restaurant
-        // For example, you can redirect to a page or show an error message
-        return redirect()->back();
-    }}
+ }
+	
+public function getAllProducts() {
+    $restaurant_id = env('Restaurant_id');
+
+        
+        $products = ProduitsRestaurants::where('restaurant_id', $restaurant_id)->get();
+        return response()->json($products);
+    
+}
 
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
-        $userId = Auth::id();
-        $user = User::find($userId);
-        if ($user) {
-        $restaurant = $user->restaurant;
-     $categories = CategoriesRestaurant::where('restaurant_id', $restaurant->id)->get();
-     $familleOptions = FamilleOptionsRestaurant::where('restaurant_id', $restaurant->id)->get();
+        $restaurant_id = env('Restaurant_id');
+
+     $categories = CategoriesRestaurant::where('restaurant_id', $restaurant_id)->get();
+     $familleOptions = FamilleOptionsRestaurant::where('restaurant_id', $restaurant_id)->get();
        
             return view('restaurant.produits.create', compact('categories', 'familleOptions'));
-        }else {
-            // Handle the case when the user does not have a restaurant
-            // For example, you can redirect to a page or show an error message
-            return redirect()->back();
-        }
+       
 }
 
 
@@ -69,15 +78,11 @@ class ProduitsRestoController extends Controller
      */
     public function store(Request $request)
     {
-        $userId = Auth::id();
-        $user = User::find($userId);
-        if ($user) {
-        
-        $restaurant = $user->restaurant;
+        $restaurant_id = env('Restaurant_id');
+
       
           $validatedData = $request->validate([
               'nom_produit' => 'required',
-              'description' => 'required',
               'prix' => 'required',
               'categorie_rest_id' => 'required',
           ]);
@@ -104,7 +109,7 @@ class ProduitsRestoController extends Controller
           $product->description = $request->input('description');
           $product->prix = $request->input('prix');
           $product->categorie_rest_id = $request->input('categorie_rest_id');
-          $product->restaurant_id = $restaurant->id;
+          $product->restaurant_id = $restaurant_id;
           $product->status = 1; // Or any other default value
           
            // Handle image upload
@@ -112,7 +117,7 @@ class ProduitsRestoController extends Controller
               $image = $request->file('image');
               $imageName = time() . '.' . $image->getClientOriginalExtension();
               $imagePath = 'uploads/' . $imageName;
-              $image->move(public_path('uploads'), $imageName);
+              $image->move(public_path('uploads/'), $imageName);
               $product->url_image = $imagePath;
           }
       
@@ -121,7 +126,7 @@ class ProduitsRestoController extends Controller
       
       // create famille options of produit
       $familleOptions = $request->input('famille_options');
-       
+       if($familleOptions){
       
       // Attach famille options to the produit
       
@@ -131,15 +136,11 @@ class ProduitsRestoController extends Controller
               'id_produit_rest' => $product->id,
               'id_familleoptions_rest' => $familleOptionId,
           ]);
-      }
+      }}
           // Redirect to the product list page with a success message
           return redirect()->route('restaurant.produits.index')->with('success', 'Produit ajouté avec succès');
       
-        }else {
-            // Handle the case when the user does not have a restaurant
-            // For example, you can redirect to a page or show an error message
-            return redirect()->back();
-        } }
+        }
 
     /**
      * Display the specified resource.
@@ -155,25 +156,22 @@ class ProduitsRestoController extends Controller
     public function edit($id)
     {
         
-        $userId = Auth::id();
-        $user = User::find($userId);
-        if ($user) {
-        
-        $restaurant = $user->restaurant;
+        $restaurant_id = env('Restaurant_id');
+
         $produit = ProduitsRestaurants::findOrFail($id);
-        $categories = CategoriesRestaurant::where('restaurant_id', $restaurant->id)->get();
-     $familleOptions = familleOptionsRestaurant::where('restaurant_id', $restaurant->id)->get();
+        $categories = CategoriesRestaurant::where('restaurant_id', $restaurant_id)->get();
+     $familleOptions = familleOptionsRestaurant::where('restaurant_id', $restaurant_id)->get();
+			/* $currentOptions = familleOptionsRestaurant::select('produit_familleoptions_restaurant.RowN', 'produit_familleoptions_restaurant.id_produit_rest', 'produit_familleoptions_restaurant.id_familleoptions_rest')
+        ->join('produits_restaurant', 'produit_familleoptions_restaurant.id_produit_rest', '=', 'produits_restaurant.id')
+        ->where('produit_familleoptions_restaurant.id_produit_rest', $id)
+        ->get();*/
     
         $selectedFamilleOptions = $produit->familleOptions->pluck('id')->toArray();
        
        
             return view('restaurant.produits.edit', compact('produit', 'categories', 'familleOptions', 'selectedFamilleOptions'));
        
-        }else {
-            // Handle the case when the user does not have a restaurant
-            // For example, you can redirect to a page or show an error message
-            return redirect()->back();
-        } }
+         }
 
     /**
      * Update the specified resource in storage.
@@ -216,8 +214,8 @@ class ProduitsRestoController extends Controller
     
        
       
-       
-              return redirect()->back()->with('success', 'Produit modifié avec succès.');
+        return redirect()->route('restaurant.produits.index')->with('success', 'Produit modifié avec succès.');
+              
        
     }
 

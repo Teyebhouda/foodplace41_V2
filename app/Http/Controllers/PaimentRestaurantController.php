@@ -11,15 +11,32 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Psy\Readline\Hoa\Console;
 
+use App\Models\ClientRestaurat;
+use App\Models\ProduitsRestaurants;
+use App\Models\Command;
+
 class PaimentRestaurantController extends Controller
 {
 
     public function index()
     {
-        // Retrieve a list of PaimentRestaurants
-        $paimentMethods = PaimentRestaurant::paginate(10);
+        $restaurant_id = env('Restaurant_id');
 
-        return view('restaurant.paiment.index', compact('paimentMethods'));
+    $restaurant = $user->restaurant;
+        // Retrieve a list of PaimentRestaurants
+        $paimentMethods = PaimentRestaurant::where('restaurant_id', $restaurant_id)->paginate(10);
+		
+		
+			// stats
+			
+		$clientCount = ClientRestaurat::where('restaurant_id', $restaurant_id)->count();
+		$produitsCount = ProduitsRestaurants::where('restaurant_id', $restaurant_id) ->count();
+		$commandeCount = Command::where('restaurant_id', $restaurant_id)->count();
+		$NouveauCommandeCount = Command::where('restaurant_id', $restaurant_id)
+            ->where('statut', 'Nouveau')
+            ->count();
+
+        return view('restaurant.paiment.index', compact('paimentMethods', 'clientCount','commandeCount', 'NouveauCommandeCount', 'produitsCount'));
     }
 
     public function create()
@@ -32,24 +49,16 @@ class PaimentRestaurantController extends Controller
     public function store(Request $request)
     {
 
-        $userId = Auth::id();
-        $user = User::find($userId);
-        if ($user) {
-        $restaurant = $user->restaurant;
-        // Validate the incoming request data
-        /*$request->validate([
-            'restaurant_id' => 'required',
-            'paiment_id' => 'required',
-            'client_id' => 'required',
-            'client_secret' => 'required',
-        ]);*/
+        $restaurant_id = env('Restaurant_id');
+
         
         
-        $existingMethode= PaimentRestaurant::where('restaurant_id',$restaurant->id)->where('paiment_id',$request->type_methode)->first();
+        
+        $existingMethode= PaimentRestaurant::where('restaurant_id',$restaurant_id)->where('paiment_id',$request->type_methode)->first();
         if(!$existingMethode){
            
                 $methodepaiement = new PaimentRestaurant();
-                $methodepaiement->restaurant_id = $restaurant->id ;
+                $methodepaiement->restaurant_id = $restaurant_id ;
                 $methodepaiement->paiment_id = $request->type_methode;
                
                 $methodepaiement->save();
@@ -73,7 +82,7 @@ class PaimentRestaurantController extends Controller
         // Create a new PaimentRestaurant instance
       
     }
-    }
+    
     public function show(PaimentRestaurant $paimentRestaurant)
     {
         // Show a single PaimentRestaurant
