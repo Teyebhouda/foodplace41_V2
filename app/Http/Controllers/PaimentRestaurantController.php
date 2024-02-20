@@ -22,7 +22,7 @@ class PaimentRestaurantController extends Controller
     {
         $restaurant_id = env('Restaurant_id');
 
-    $restaurant = $user->restaurant;
+   
         // Retrieve a list of PaimentRestaurants
         $paimentMethods = PaimentRestaurant::where('restaurant_id', $restaurant_id)->paginate(10);
 		
