@@ -60,8 +60,7 @@ public function stripePost(Request $request, $paymentMethodId)
     $totalPrice = $this->calculateTotalPrice($cart);
 
     try {
-        // Set the Stripe secret API key from your environment variables
-   //   \Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
+      
 		  \Stripe\Stripe::setApiKey($paypalCredentials->client_secret);
       // dd(env('STRIPE_KEY'));
         // Create a Stripe charge

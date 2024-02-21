@@ -542,7 +542,7 @@ function validateForm() {
                     <div class="panel-body">
                         <form role="form" class="require-validation"
                             data-cc-on-file="false"
-                            data-stripe-publishable-key="{{ env('STRIPE_KEY') }}"
+                           
                             id="payment-form">
                             @csrf
                             <div class='form-row row'>

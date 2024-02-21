@@ -64,7 +64,7 @@
                             method="post" 
                             class="require-validation"
                             data-cc-on-file="false"
-                            data-stripe-publishable-key="{{ env('STRIPE_KEY') }}"
+                           
                             id="payment-form">
                         @csrf
    <div class='form-row row'>
@@ -177,7 +177,7 @@ $(function() {
      
         if (!$form.data('cc-on-file')) {
           e.preventDefault();
-          Stripe.setPublishableKey($form.data('stripe-publishable-key'));
+         
           Stripe.createToken({
             number: $('.card-number').val(),
             cvc: $('.card-cvc').val(),
