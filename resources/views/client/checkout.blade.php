@@ -739,7 +739,7 @@ $(document).ready(function() {
 
     $checkform.on('submit', function (e) {
         e.preventDefault(); // Prevent the default form submission
-        var Payment = document.getElementById('payment_method');
+        var Payment = document.getElementById('payment-method-list');
         var PaymentMethod = Payment.value;
         var selectedOption = Payment.options[Payment.selectedIndex];
         var CartBancaireContainer = document.getElementById('CartBancaire');
