@@ -39,6 +39,7 @@ class RegistrationController extends Controller
 
     public function register(Request $request)
 {
+    $restaurant_id = env('Restaurant_id');
     $request->validate([
         'nom' => 'required',
         'prenom' => 'required',
