@@ -495,8 +495,8 @@ function validateForm() {
     var deliveryMethodButtons = document.querySelectorAll('.delivery-method-btn');
     var selectedDeliveryMethod = Array.from(deliveryMethodButtons).find(btn => btn.classList.contains('active'));
 
-    var paymentMethodSelect = document.querySelector('#paymentMethod select[name="payment_method"]');
-    var selectedPaymentMethod = paymentMethodSelect.value;
+    var paymentMethodButtons = document.querySelectorAll('.payment-method-btn');
+        var selectedPaymentMethod = Array.from(paymentMethodButtons).find(btn => btn.classList.contains('active'));
 
     if (!selectedDeliveryMethod && selectedPaymentMethod === "") {
         alert("Veuillez sélectionner la méthode de livraison et de paiement avant de confirmer la commande.");
@@ -504,11 +504,10 @@ function validateForm() {
     } else if (!selectedDeliveryMethod) {
         alert("Veuillez sélectionner une méthode de livraison avant de confirmer la commande.");
         return false; // Prevent form submission
-    } else if (selectedPaymentMethod === "") {
-        alert("Veuillez sélectionner une méthode de paiement avant de confirmer la commande.");
-        return false; // Prevent form submission
-    }
-
+    } else if (!selectedPaymentMethod) {
+            alert("Veuillez sélectionner une méthode de paiement avant de confirmer la commande.");
+            return false; // Prevent form submission
+        }
     return true; // Allow form submission
 }
 </script>
