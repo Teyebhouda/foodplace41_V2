@@ -1220,7 +1220,7 @@ var productIditem = generateUUID();
       method: 'POST',
       data: {
         cartItem: cartItem,
-        _token: '<?php echo e(csrf_token()); ?>'
+        _token: $('meta[name="csrf-token"]').attr('content')
       },
       success: function(response) {
         // Update the cart sidebar with the updated cart data

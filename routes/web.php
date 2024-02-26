@@ -61,7 +61,7 @@ use App\Http\Controllers\StripePaymentController;
 */
 
 
-
+Route::post('/checkout1', [CommandController::class, 'store'])->name('client.checkout1.store');
 	Route::get('/contact', [ContactController::class, 'showContactForm'])->name('contact.show');
 Route::post('/contact', [ContactController::class, 'submitContactForm'])->name('contact.submit');
 	Route::get('/politique-de-cookies',[CookiePolicyController::class, 'show'])->name('cookie.policy');
@@ -105,7 +105,7 @@ Route::post('/contact', [ContactController::class, 'submitContactForm'])->name('
     Route::get('/fetch-cart', [CommandController::class, 'fetchCart'])->name('cart.fetch');
    // Route::get('/fetch-cart', [CartController::class, 'fetchCart'])->name('cart.fetch');
     Route::get('/checkout', [CommandController::class, 'checkout'])->name('client.checkout');
-   Route::match(['get', 'post'], '/checkout1', [CommandController::class, 'store'])->name('client.checkout1.store');
+ 
 
     Route::post('/register-and-checkout', [CommandController::class, 'registerAndCheckout'])->name('client.registerAndCheckout');
 

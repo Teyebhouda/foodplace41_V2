@@ -173,18 +173,21 @@ public function editCart(Request $request)
 
    public function store(Request $request)
    {
+   
 	 session::start();
-	  // dd($request);
-	     $cart = session()->get('cart', []);
+    // dd($request->all());
+     	     $cart = session()->get('cart', []);
 	 
         $cartItems = session('cart', []);
 	    if($cartItems){
-	 // dd( $cartItems);
+	
         $totalPrice = 0;
        
        
 			$clientId = env('Restaurant_id');
+           
             $client = Client::where('id', $clientId)->firstOrFail();
+          
 		$livraisons = LivraisonRestaurant::where('restaurant_id', $clientId)->get();
 
        $restaurantId = $client->id;
@@ -206,11 +209,11 @@ public function editCart(Request $request)
     $deliveryMethodId = $request->input('delivery_method');
 	   
     $paymentMethodId = $request->input('payment_method');
-	   
+	 
 $deliveryTime = $request->has('delivery_time') ? $request->input('delivery_time') : '';
 
 $PaymentMethode = PaimentMethod::findOrFail($paymentMethodId);
-	 
+	//dd($PaymentMethode);
     if (auth()->guard('clientRestaurant')->check()){
 		
 

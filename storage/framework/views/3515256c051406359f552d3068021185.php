@@ -52,13 +52,17 @@
     </style>
 </head>
 <body>
-    <h1>Cher(e) <?php echo e($clientFirstName); ?> <?php echo e($clientLastName); ?>,</h1>
+    <h1>Cher(e) restaurant,</h1>
 
-    <h2>Nous sommes ravis de vous informer que votre commande a été confirmée avec succès.</h2>
+    <h2>Vous avez une nouvelle commande.</h2>
 
     <ul style="font-size: 18px;">
+	<li><strong>Date de commande :</strong> <?php echo e($currentDateTime); ?></li>
     <li><strong>Numéro de commande :</strong> <?php echo e($commandId); ?></li>
-    <li><strong>Date de commande :</strong> <?php echo e($currentDateTime); ?></li>
+	<li><strong>Client :</strong> <?php echo e($clientFirstName); ?> <?php echo e($clientLastName); ?></li>
+	<li><strong>Numéro de téléphone :</strong> <?php echo e($clientNum1); ?> </li>
+	<li><strong>Adresse :</strong> <?php echo e($clientAdresse); ?> </li>
+    
     <li><strong>Produits commandés :</strong></li>
 </ul>
 
@@ -71,7 +75,7 @@
         </tr>
     </thead>
     <tbody>
-        <?php $__currentLoopData = $cartItems; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+       <?php $__currentLoopData = $cartItems; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
             <?php if(!empty($item['options'])): ?>
                 <?php if(is_array($item['options'])): ?>
                     <tr>
@@ -95,7 +99,8 @@
                     <tr>
                         <td>
                             <?php echo e($item['name']); ?><br>
-                            Options:
+							  Options:
+
                             <?php $__currentLoopData = $options; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $option): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <?php if($index == 0): ?>
                                 <?php endif; ?>
@@ -121,9 +126,9 @@
 
     <h2>Montant total TTC : <?php echo e($totalPrice); ?> €</h2>
 
-    <h2>Nous sommes impatients de vous servir à nouveau.</h2>
+    <h2>Veuillez préparer la commande pour la livraison ou à emporter.</h2>
 
-    <p style="font-size: 16px;">Cordialement,<br>L'équipe de Orlando's Café  .</p>
+    <p style="font-size: 16px;">Cordialement.</p>
 </body>
 </html>
-<?php /**PATH C:\inetpub\vhosts\foodexpress.site\xn--OrlandosCaf-lbb.foodexpress.site\resources\views/order_confirmation.blade.php ENDPATH**/ ?>
+<?php /**PATH C:\Users\HD\Workspace\foodexpress\resources\views/order_confirmation_restaurant.blade.php ENDPATH**/ ?>

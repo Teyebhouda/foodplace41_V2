@@ -23,12 +23,10 @@
 		<br>
 		<br>
        
-            <div class="section">
-    <p>Merci pour votre demande de réservation, <?php echo e($ClientFName); ?>. Nous avons bien reçu votre demande et nous la traiterons dans les plus brefs délais. Nous avons hâte de vous accueillir!</p>
-</div>
+            <p>Votre Commande est confirmée, merci pour votre confiance.</p>
     </div>
 </div>
 <!-- Cart Items End -->
 
 <?php echo $__env->make('client.layouts.footer_client', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
-<?php /**PATH C:\inetpub\vhosts\foodexpress.site\xn--OrlandosCaf-lbb.foodexpress.site\resources\views/client/booking_success.blade.php ENDPATH**/ ?>
+<?php /**PATH C:\Users\HD\Workspace\foodexpress\resources\views/client/checkout_success.blade.php ENDPATH**/ ?>

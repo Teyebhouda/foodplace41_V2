@@ -368,6 +368,7 @@ function validateForm() {
                 button.addEventListener('click', function() {
                     var dataMethod = this.getAttribute('data-method');
                     var deliveryTypeId = this.getAttribute('data-id');
+            document.getElementById('delivery_method_input').value = deliveryTypeId;
 
                     console.log('Delivery Method:', dataMethod);
                     console.log('Delivery Type ID:', deliveryTypeId);
@@ -469,6 +470,12 @@ function validateForm() {
 
         paymentMethodButtons.forEach(function (button) {
             button.addEventListener('click', function () {
+                var dataMethod = this.getAttribute('data-method');
+            var PaymentTypeId = this.getAttribute('data-id');
+
+            // Update the hidden input value
+            document.getElementById('payment_method_input').value = PaymentTypeId;
+
                 // Toggle active class for switchable buttons
                 paymentMethodButtons.forEach(function (btn) {
                     btn.classList.remove('active');
@@ -490,6 +497,12 @@ function validateForm() {
 				  
            
             </div>
+
+
+            <input type="hidden" name="delivery_method" id="delivery_method_input" value="">
+            <input type="hidden" name="payment_method" id="payment_method_input" value="">
+ 
+
             </form>
 				
 				<script>
@@ -497,8 +510,8 @@ function validateForm() {
     var deliveryMethodButtons = document.querySelectorAll('.delivery-method-btn');
     var selectedDeliveryMethod = Array.from(deliveryMethodButtons).find(btn => btn.classList.contains('active'));
 
-    var paymentMethodSelect = document.querySelector('#paymentMethod select[name="payment_method"]');
-    var selectedPaymentMethod = paymentMethodSelect.value;
+    var paymentMethodButtons = document.querySelectorAll('.payment-method-btn');
+        var selectedPaymentMethod = Array.from(paymentMethodButtons).find(btn => btn.classList.contains('active'));
 
     if (!selectedDeliveryMethod && selectedPaymentMethod === "") {
         alert("Veuillez sélectionner la méthode de livraison et de paiement avant de confirmer la commande.");
@@ -506,11 +519,10 @@ function validateForm() {
     } else if (!selectedDeliveryMethod) {
         alert("Veuillez sélectionner une méthode de livraison avant de confirmer la commande.");
         return false; // Prevent form submission
-    } else if (selectedPaymentMethod === "") {
-        alert("Veuillez sélectionner une méthode de paiement avant de confirmer la commande.");
-        return false; // Prevent form submission
-    }
-
+    } else if (!selectedPaymentMethod) {
+            alert("Veuillez sélectionner une méthode de paiement avant de confirmer la commande.");
+            return false; // Prevent form submission
+        }
     return true; // Allow form submission
 }
 </script>
@@ -544,7 +556,7 @@ function validateForm() {
                     <div class="panel-body">
                         <form role="form" class="require-validation"
                             data-cc-on-file="false"
-                            data-stripe-publishable-key="<?php echo e(env('STRIPE_KEY')); ?>"
+                           
                             id="payment-form">
                             <?php echo csrf_field(); ?>
                             <div class='form-row row'>
@@ -741,18 +753,15 @@ $(document).ready(function() {
 
     $checkform.on('submit', function (e) {
         e.preventDefault(); // Prevent the default form submission
-        var Payment = document.getElementById('payment_method');
-        var PaymentMethod = Payment.value;
-        var selectedOption = Payment.options[Payment.selectedIndex];
-        var CartBancaireContainer = document.getElementById('CartBancaire');
+        var selectedPaymentMethod = document.querySelector('.payment-method-btn.active');
+     var CartBancaireContainer = document.getElementById('CartBancaire');
         var btncustom = document.getElementById('container_details');
-        var dataMethod = selectedOption.getAttribute('data-method');
-        var deliveryTypeId = selectedOption.value;
-        console.log('Delivery Method:', dataMethod);
+        var dataMethod = selectedPaymentMethod.getAttribute('data-method');
+        console.log('Payment Method:', dataMethod);
+
         if (dataMethod === "Carte Bancaire") {
             CartBancaireContainer.style.display = 'block';
-            console.log('Delivery Type ID:', deliveryTypeId);
-            console.log('Delivery Method:', dataMethod);
+          
             btncustom.style.display = 'none';
         } else{
             btncustom.style.display = 'block';
