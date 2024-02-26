@@ -52,15 +52,15 @@
         <li class="menu-item">
         </li>
         <li class="menu-item">
-        <a href="{{ url('/store') }}">Menu</a>
+        <a href="<?php echo e(url('/store')); ?>">Menu</a>
         </li>
-		 @if(!request()->is('client/login'))
-    @if($client->reservation_table == 1)
+		 <?php if(!request()->is('client/login')): ?>
+    <?php if($client->reservation_table == 1): ?>
         <li class="menu-item">
-            <a href="{{ url('/reservationtables') }}">Réserver une Table</a>
+            <a href="<?php echo e(url('/reservationtables')); ?>">Réserver une Table</a>
         </li>
-    @endif
-@endif
+    <?php endif; ?>
+<?php endif; ?>
 
       </ul>
 
@@ -82,23 +82,24 @@
 
           <div class="top-header-contacts">
             <ul class="top-header-nav">
-				             @if ($client)
-<li> <a class="p-0" href="tel:{{ $client->phoneNum1 }}" style="font-size: 16px;"><i class="fas fa-phone mr-2"></i> {{ $client->phoneNum1 }}</a> </li>
-@else
+				             <?php if($client): ?>
+<li> <a class="p-0" href="tel:<?php echo e($client->phoneNum1); ?>" style="font-size: 16px;"><i class="fas fa-phone mr-2"></i> <?php echo e($client->phoneNum1); ?></a> </li>
+<?php else: ?>
     <!-- Handle the case where $client is null or not properly initialized -->
-@endif
+<?php endif; ?>
 
 
             </ul>
 			  
           </div>
           <ul class="top-header-nav header-cta">
-            @auth('clientRestaurant')
+            <?php if(auth()->guard('clientRestaurant')->check()): ?>
                 
             <span class="btn-book-a-table" style="margin-right:15px; color: white; font-size: medium">
-    <strong>Bonjour, {{ auth('clientRestaurant')->user()->FirstName }} {{ auth('clientRestaurant')->user()->LastName }}
+    <strong>Bonjour, <?php echo e(auth('clientRestaurant')->user()->FirstName); ?> <?php echo e(auth('clientRestaurant')->user()->LastName); ?>
+
 </strong></span>
-           <a class="btn-book-a-table" href="{{ url('/edit-profile') }}" style="margin-right:15px;color: white;font-size: medium">Modifier Compte </a>
+           <a class="btn-book-a-table" href="<?php echo e(url('/edit-profile')); ?>" style="margin-right:15px;color: white;font-size: medium">Modifier Compte </a>
 
 
 
@@ -107,11 +108,11 @@
 
 
 
-                @else
-                  <a class="btn-book-a-table" href="{{ url('client/login') }}" style="margin-right:15px;color: white;font-size: medium">Connexion |</a>
-                <a class="btn-book-a-table" href="{{ url('client/register') }}" style="margin-right:15px;color: white;font-size: medium">Inscription</a>
+                <?php else: ?>
+                  <a class="btn-book-a-table" href="<?php echo e(url('client/login')); ?>" style="margin-right:15px;color: white;font-size: medium">Connexion |</a>
+                <a class="btn-book-a-table" href="<?php echo e(url('client/register')); ?>" style="margin-right:15px;color: white;font-size: medium">Inscription</a>
            
-                @endauth
+                <?php endif; ?>
           </ul>
         </div>
       </div>
@@ -120,27 +121,27 @@
     <div class="container">
       <nav class="navbar">
         <!-- Logo -->
-               @if ($client)
-    <a class="navbar-brand" href="{{ url('/store') }}"> <img src="{{ asset($client->logo) }}" style="max-width:135px;max-height:73px;" alt="logo"> </a>
-@else
+               <?php if($client): ?>
+    <a class="navbar-brand" href="<?php echo e(url('/store')); ?>"> <img src="<?php echo e(asset($client->logo)); ?>" style="max-width:135px;max-height:73px;" alt="logo"> </a>
+<?php else: ?>
     <!-- Handle the case where $client is null or not properly initialized -->
-@endif
+<?php endif; ?>
 
         <!-- Menu -->
         <ul class="navbar-nav">
           <li class="menu-item">
-            <a href="{{ url('/store') }}"style="font-size: 20px;">Menu</a>
+            <a href="<?php echo e(url('/store')); ?>"style="font-size: 20px;">Menu</a>
           </li>
 			
 	
-			 @if(!request()->is('client/login'))
-			 @if($client->reservation_table  == 1)
+			 <?php if(!request()->is('client/login')): ?>
+			 <?php if($client->reservation_table  == 1): ?>
 
           <li class="menu-item">
-            <a href="{{ url('/reservationtables') }}" style="font-size: 20px;">Réserver une Table</a>
+            <a href="<?php echo e(url('/reservationtables')); ?>" style="font-size: 20px;">Réserver une Table</a>
           </li>
-          @endif
-         @endif 
+          <?php endif; ?>
+         <?php endif; ?> 
          
          
   
@@ -149,7 +150,7 @@
         <div class="header-controls">
           <ul class="header-controls-inner">
             <li class="cart-dropdown-wrapper cart-trigger">
-              <span class="cart-item-count">{{ $cart ? count($cart) : 0 }}</span>
+              <span class="cart-item-count"><?php echo e($cart ? count($cart) : 0); ?></span>
               <i class="flaticon-shopping-bag" style="color: white;"></i>
             </li>
             <!--<li class="search-dropdown-wrapper search-trigger">
@@ -169,7 +170,7 @@
 </header>
 <!-- Subheader Start -->
 
-  <div class="subheader  dark-overlay-2" style="background-image: url('{{ asset($client->Slide_photo) }}')">
+  <div class="subheader  dark-overlay-2" style="background-image: url('<?php echo e(asset($client->Slide_photo)); ?>')">
     <div class="container">
       <div class="subheader-inner">
       
@@ -180,3 +181,4 @@
 
     </div>
   </div>
+<?php /**PATH C:\Users\teyeb\laravel dev\Foodplace-v2\foodplace41_V2\resources\views/client/layouts/header_menu.blade.php ENDPATH**/ ?>

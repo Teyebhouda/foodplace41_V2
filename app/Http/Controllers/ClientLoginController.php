@@ -51,6 +51,7 @@ class ClientLoginController extends Controller
 
     public function logout()
     {
+        dd('ok ');
         Auth::guard('clientRestaurant')->logout();
 
         return redirect('/store');

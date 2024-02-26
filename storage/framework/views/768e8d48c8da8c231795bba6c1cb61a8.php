@@ -1,6 +1,6 @@
-@include('client.layouts.top_menu_client')
+<?php echo $__env->make('client.layouts.top_menu_client', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 <!-- Aside (Mobile Navigation) -->
-@include('client.layouts.header_menu')
+<?php echo $__env->make('client.layouts.header_menu', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
   
   
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
@@ -43,7 +43,7 @@
 			<br>
             <h3>Votre Panier</h3>
 			
-            @if (count($cartItems) > 0)
+            <?php if(count($cartItems) > 0): ?>
 			<div class="table-responsive">
                 <table>
                     <thead>
@@ -60,38 +60,40 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($cartItems as $index => $cartItem)
-                            <tr data-product-id="{{ $cartItem['id'] }}">
+                        <?php $__currentLoopData = $cartItems; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $cartItem): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <tr data-product-id="<?php echo e($cartItem['id']); ?>">
                                
-                                <td>{{ $cartItem['name'] }}</td>
-                                <td>{{ $cartItem['unityPrice'] }} €</td>
+                                <td><?php echo e($cartItem['name']); ?></td>
+                                <td><?php echo e($cartItem['unityPrice']); ?> €</td>
                                
                                 <td>
-                                    @if ((isset($cartItem['options'])) &&($cartItem['options'] != []))
-                                    {{$cartItem['options']}}
-                                @endif
+                                    <?php if((isset($cartItem['options'])) &&($cartItem['options'] != [])): ?>
+                                    <?php echo e($cartItem['options']); ?>
+
+                                <?php endif; ?>
                                 </td>
                                 <td>
-                                    {{ $cartItem['quantity'] }}
-                                <!-- <button class="btn-quantity" data-product="{{ $cartItem['id'] }}" data-action="decrease">-</button>
-                                    <input type="number" name="quantity[{{ $cartItem['id'] }}]" id="quantity_{{ $cartItem['id'] }}" value="{{ $cartItem['quantity'] }}" min="1" max="100">
-                                    <button class="btn-quantity" data-product="{{ $cartItem['id'] }}" data-action="increase">+</button> -->
+                                    <?php echo e($cartItem['quantity']); ?>
+
+                                <!-- <button class="btn-quantity" data-product="<?php echo e($cartItem['id']); ?>" data-action="decrease">-</button>
+                                    <input type="number" name="quantity[<?php echo e($cartItem['id']); ?>]" id="quantity_<?php echo e($cartItem['id']); ?>" value="<?php echo e($cartItem['quantity']); ?>" min="1" max="100">
+                                    <button class="btn-quantity" data-product="<?php echo e($cartItem['id']); ?>" data-action="increase">+</button> -->
                                 </td>
-                                <td>{{ $cartItem['price'] }} €</td>
-                                <td><button class="btn-remove" data-product-id="{{ $cartItem['id'] }}">Annuler</button></td>
+                                <td><?php echo e($cartItem['price']); ?> €</td>
+                                <td><button class="btn-remove" data-product-id="<?php echo e($cartItem['id']); ?>">Annuler</button></td>
                             </tr>
-                        @endforeach
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         <tr class="total">
                   <td>
                     <h6 class="mb-0">Total</h6>
                   </td>
                   <td></td>
-                  <td> <div class="totalprice"> <span><strong>{{ $totalPrice }} €</strong></span></div></td>
+                  <td> <div class="totalprice"> <span><strong><?php echo e($totalPrice); ?> €</strong></span></div></td>
                 </tr>
                     </tbody> 
                 </table>
 				</div>
-                @if (auth('clientRestaurant')->check())
+                <?php if(auth('clientRestaurant')->check()): ?>
 
 
                 
@@ -102,64 +104,64 @@
               
             <div class="col-xl-11">
                     <!-- Show the regular checkout form for authenticated users -->
-                    <form id="checkoutForm"  method="POST" action="{{ route('client.checkout1.store') }}"  class="check-validation">
-                        @csrf
+                    <form id="checkoutForm"  method="POST" action="<?php echo e(route('client.checkout1.store')); ?>"  class="check-validation">
+                        <?php echo csrf_field(); ?>
 
   <div class="row">
               <div class="form-group col-xl-6">
                 <label>Nom <span class="text-danger">*</span></label>
-                <input type="text" placeholder="Nom" name="nom" class="form-control" value="{{ optional($clientRestaurant)->FirstName }}" required="">
+                <input type="text" placeholder="Nom" name="nom" class="form-control" value="<?php echo e(optional($clientRestaurant)->FirstName); ?>" required="">
               </div>
               <div class="form-group col-xl-6">
                 <label>Prénom <span class="text-danger">*</span></label>
-                <input type="text" placeholder="Prénom" name="prenom" class="form-control" value="{{ optional($clientRestaurant)->LastName }}" required="">
+                <input type="text" placeholder="Prénom" name="prenom" class="form-control" value="<?php echo e(optional($clientRestaurant)->LastName); ?>" required="">
               </div>
               </div>
              
               <div class="form-group col-xl-12">
                 <label> Adresse<span class="text-danger">*</span></label>
-                <input type="text" placeholder="Adresse" name="adresse" class="form-control" value="{{ optional($clientRestaurant)->Address }}" required="">
+                <input type="text" placeholder="Adresse" name="adresse" class="form-control" value="<?php echo e(optional($clientRestaurant)->Address); ?>" required="">
               </div>
               <div class="row">
               <div class="form-group col-xl-6">
                 <label>Code Postal<span class="text-danger">*</span></label>
-                <input type="text" placeholder="Code Postal" name="codePostal" class="form-control" value="{{ optional($clientRestaurant)->codepostal }}">
+                <input type="text" placeholder="Code Postal" name="codePostal" class="form-control" value="<?php echo e(optional($clientRestaurant)->codepostal); ?>">
               </div>
               <div class="form-group col-xl-6">
                 <label>Ville <span class="text-danger">*</span></label>
-                <input type="text" placeholder="Ville" name="ville" class="form-control" value="{{ optional($clientRestaurant)->ville }}" required="">
+                <input type="text" placeholder="Ville" name="ville" class="form-control" value="<?php echo e(optional($clientRestaurant)->ville); ?>" required="">
               </div>
               </div>
               <div class="row">
               <div class="form-group col-xl-6">
                 <label>Numéro de téléphone 1<span class="text-danger">*</span></label>
-                <input type="text" placeholder="Numéro de téléphone " name="num1" class="form-control" value="{{ optional($clientRestaurant)->phoneNum1 }}" required="">
+                <input type="text" placeholder="Numéro de téléphone " name="num1" class="form-control" value="<?php echo e(optional($clientRestaurant)->phoneNum1); ?>" required="">
               </div>
               <div class="form-group col-xl-6">
                 <label>Numéro de téléphone 2</label>
-                <input type="text" placeholder="Numéro de téléphone " name="num2" class="form-control" value="{{ optional($clientRestaurant)->phoneNum2 }}" >
+                <input type="text" placeholder="Numéro de téléphone " name="num2" class="form-control" value="<?php echo e(optional($clientRestaurant)->phoneNum2); ?>" >
               </div>
               </div>
                          <!-- Cart Details and Delivery Method -->
 <!-- Cart Details and Delivery Method -->
 <div id="cartDetailsAndDeliveryMethod">
-    @if (count($livraisons) > 0)
+    <?php if(count($livraisons) > 0): ?>
         <h3>Choisissez la méthode de livraison</h3>
 
 
         <ul id="delivery-method-list">
-            @foreach ($livraisons as $livraison)
-                @if ($livraison)
-                    @php
+            <?php $__currentLoopData = $livraisons; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $livraison): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                <?php if($livraison): ?>
+                    <?php
                         $livraisonType = \App\Models\Livraison::find($livraison->livraison_id);
-                    @endphp
-                    <li class="delivery-method-btn" data-method="{{ $livraisonType->methode }}" data-id="{{ $livraisonType->id }}">
+                    ?>
+                    <li class="delivery-method-btn" data-method="<?php echo e($livraisonType->methode); ?>" data-id="<?php echo e($livraisonType->id); ?>">
                         <i class="fas fa-truck"></i>
                         <i class="far fa-clock"></i> 
-                        <span>{{ $livraisonType->methode }}</span>
+                        <span><?php echo e($livraisonType->methode); ?></span>
                     </li>
-                @endif
-            @endforeach
+                <?php endif; ?>
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
         </ul>
 
         <div id="delivery-time-container">
@@ -221,28 +223,28 @@
                 }
             }
         </script>
-    @endif
+    <?php endif; ?>
 </div>
 
 
        
       <!-- Payment Method -->
       <div id="paymentMethod">
-    @if (count($paiments) > 0)
+    <?php if(count($paiments) > 0): ?>
         <h3>Choisissez la méthode de paiement</h3>
         <ul id="payment-method-list" class="switchable-list">
-            @foreach ($paiments as $paiment)
-                @php
+            <?php $__currentLoopData = $paiments; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $paiment): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                <?php
                     $paimentType = \App\Models\PaimentMethod::find($paiment->paiment_id);
-                @endphp
+                ?>
                 <!-- Assuming the name field for the payment method is 'id' -->
-                <li class="payment-method-btn" data-method="{{ $paimentType->type_methode }}" data-id="{{ $paimentType->id }}">
+                <li class="payment-method-btn" data-method="<?php echo e($paimentType->type_methode); ?>" data-id="<?php echo e($paimentType->id); ?>">
                     <i class="far fa-credit-card"></i> <!-- Icon for credit card, adjust as needed -->
-                    <span>{{ $paimentType->type_methode }}</span>
+                    <span><?php echo e($paimentType->type_methode); ?></span>
                 </li>
-            @endforeach
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
         </ul>
-    @endif
+    <?php endif; ?>
 
     <br>
 </div>
@@ -338,15 +340,15 @@ function validateForm() {
 </script>
               </div>
 
-                @else
+                <?php else: ?>
                 <div class="check-form">
                 <div class="row">
                  <!-- Buyer Info -->
             <h4>Entrer vos détailles</h4>
               
             <div class="col-xl-11">
-            <form id="checkoutForm"  method="POST" action="{{ route('client.checkout1.store') }}"  class="check-validation">
-            @csrf
+            <form id="checkoutForm"  method="POST" action="<?php echo e(route('client.checkout1.store')); ?>"  class="check-validation">
+            <?php echo csrf_field(); ?>
             <div class="row">
               <div class="form-group col-xl-6">
                 <label>Nom <span class="text-danger">*</span></label>
@@ -407,9 +409,9 @@ function validateForm() {
             </div>
         
        
-              <p>Vous avez déjà un compte? <a href="{{ route('client.login') }}">Connexion</a> </p>    
+              <p>Vous avez déjà un compte? <a href="<?php echo e(route('client.login')); ?>">Connexion</a> </p>    
 				  <div class="form-group">
-                  <a href="{{ route('register.google') }}" class="btn  btn-social">
+                  <a href="<?php echo e(route('register.google')); ?>" class="btn  btn-social">
             <i class="fab fa-google  fa-6x"></i> Se connecter avec Google
         </a>
     
@@ -420,23 +422,23 @@ function validateForm() {
 
   <!-- Cart Details and Delivery Method -->
   <div id="cartDetailsAndDeliveryMethod">
-    @if (count($livraisons) > 0)
+    <?php if(count($livraisons) > 0): ?>
         <h3>Choisissez la méthode de livraison</h3>
 
 
         <ul id="delivery-method-list">
-            @foreach ($livraisons as $livraison)
-                @if ($livraison)
-                    @php
+            <?php $__currentLoopData = $livraisons; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $livraison): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                <?php if($livraison): ?>
+                    <?php
                         $livraisonType = \App\Models\Livraison::find($livraison->livraison_id);
-                    @endphp
-                    <li class="delivery-method-btn" data-method="{{ $livraisonType->methode }}" data-id="{{ $livraisonType->id }}">
+                    ?>
+                    <li class="delivery-method-btn" data-method="<?php echo e($livraisonType->methode); ?>" data-id="<?php echo e($livraisonType->id); ?>">
                         <i class="fas fa-truck"></i>
                         <i class="far fa-clock"></i> 
-                        <span>{{ $livraisonType->methode }}</span>
+                        <span><?php echo e($livraisonType->methode); ?></span>
                     </li>
-                @endif
-            @endforeach
+                <?php endif; ?>
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
         </ul>
 
         <div id="delivery-time-container">
@@ -498,28 +500,28 @@ function validateForm() {
                 }
             }
         </script>
-    @endif
+    <?php endif; ?>
 </div>
 
 
        
       <!-- Payment Method -->
       <div id="paymentMethod">
-    @if (count($paiments) > 0)
+    <?php if(count($paiments) > 0): ?>
         <h3>Choisissez la méthode de paiement</h3>
         <ul id="payment-method-list" class="switchable-list">
-            @foreach ($paiments as $paiment)
-                @php
+            <?php $__currentLoopData = $paiments; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $paiment): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                <?php
                     $paimentType = \App\Models\PaimentMethod::find($paiment->paiment_id);
-                @endphp
+                ?>
                 <!-- Assuming the name field for the payment method is 'id' -->
-                <li class="payment-method-btn" data-method="{{ $paimentType->type_methode }}" data-id="{{ $paimentType->id }}">
+                <li class="payment-method-btn" data-method="<?php echo e($paimentType->type_methode); ?>" data-id="<?php echo e($paimentType->id); ?>">
                     <i class="far fa-credit-card"></i> <!-- Icon for credit card, adjust as needed -->
-                    <span>{{ $paimentType->type_methode }}</span>
+                    <span><?php echo e($paimentType->type_methode); ?></span>
                 </li>
-            @endforeach
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
         </ul>
-    @endif
+    <?php endif; ?>
 
     <br>
 </div>
@@ -620,12 +622,12 @@ function validateForm() {
  
 
                                                                         
-                @endif
+                <?php endif; ?>
 </div>
 	
-            @else
+            <?php else: ?>
                 <p>Aucun article dans le panier.</p>
-            @endif
+            <?php endif; ?>
         </div>
         
         </div>  
@@ -645,7 +647,7 @@ function validateForm() {
                             data-cc-on-file="false"
                            
                             id="payment-form">
-                            @csrf
+                            <?php echo csrf_field(); ?>
                             <div class='form-row row'>
                                 <div class='col-xs-12'>
                                     <i class="fab fa-cc-mastercard fa-2x card-icon" title="Mastercard"></i>
@@ -691,7 +693,7 @@ function validateForm() {
                             </div>
                             <div class="row">
                                 <div class="col-xs-12">
-                                    <button class="btn btn-primary btn-lg btn-block btn-cart">Payer et Confirmer <b>{{$totalPrice}} €</b></button>
+                                    <button class="btn btn-primary btn-lg btn-block btn-cart">Payer et Confirmer <b><?php echo e($totalPrice); ?> €</b></button>
                                 </div>
                                 <div class="col-xs-12">
                                     <div class="mb-4"></div>
@@ -745,10 +747,10 @@ function validateForm() {
             var productId = row.attr("data-product-id");
             
             $.ajax({
-                url: '{{ route("remove.CartItem") }}',
+                url: '<?php echo e(route("remove.CartItem")); ?>',
         method: 'POST',
         data: {
-            _token: '{{ csrf_token() }}',
+            _token: '<?php echo e(csrf_token()); ?>',
             productId: productId,
         },
                 success: function (response) {
@@ -789,11 +791,11 @@ function validateForm() {
     }
 
     function updateQuantity(productId, quantity) {
-    fetch('{{ route("update.quantity") }}', {
+    fetch('<?php echo e(route("update.quantity")); ?>', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            'X-CSRF-TOKEN': '<?php echo e(csrf_token()); ?>'
         },
         body: JSON.stringify({ productId, quantity })
     })
@@ -889,7 +891,7 @@ console.log(formData);
      
         if (!$form.data('cc-on-file')) {
           e.preventDefault();
-         Stripe.setPublishableKey('{{ env('STRIPE_KEY') }}');
+         Stripe.setPublishableKey('<?php echo e(env('STRIPE_KEY')); ?>');
 
           Stripe.createToken({
             number: $('.card-number').val(),
@@ -928,14 +930,14 @@ console.log(formData);
         $form.find('input[type=text]').empty();
         $form.append("<input type='hidden' name='stripeToken' value='" + token + "'/>");
 		
-var routeUrl = '{{ route("stripe.post", ["paymentMethodId" => ":paymentMethodId"]) }}';
+var routeUrl = '<?php echo e(route("stripe.post", ["paymentMethodId" => ":paymentMethodId"])); ?>';
 routeUrl = routeUrl.replace(':paymentMethodId', paymentMethodId);
         // Make an AJAX request to your server to process the payment
         $.ajax({
             url: routeUrl,
             method: 'POST',
             data: {
-                _token: '{{ csrf_token() }}',
+                _token: '<?php echo e(csrf_token()); ?>',
                 stripeToken: token // Send the Stripe token to your server
             },
             success: function (response) {
@@ -960,4 +962,5 @@ var $checkform = $(".check-validation");
 		
 <!-- Cart Items End -->
 
-@include('client.layouts.footer_client')
+<?php echo $__env->make('client.layouts.footer_client', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+<?php /**PATH C:\Users\teyeb\laravel dev\Foodplace-v2\foodplace41_V2\resources\views/client/checkout.blade.php ENDPATH**/ ?>
