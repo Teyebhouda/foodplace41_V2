@@ -78,6 +78,9 @@
               <span class="qty-add"><i class="fas fa-plus"></i></span>
               </div>
               <div class="customize-total" >
+                <h5 >Ajouter une note : <span class="final-price custom-primary"> <span>€</span> </span> </h5>
+              </div>
+              <div class="customize-total" >
                 <h5 >Prix : <span class="final-price custom-primary"> <span>€</span> </span> </h5>
               </div>
              
@@ -718,7 +721,6 @@ if (encodedString !== null && encodedString !== undefined && (typeof encodedStri
 $pElement.text(response.product.description);
             // Update the background image
             $('.modal-header').css('background-image', 'url("' + response.product.url_image + '")');
-  
            
            $('.customize-variations').empty();
             for (var i = 0; i < response.familleOptions.length; i++) {
