@@ -71,7 +71,7 @@
               </div>
               <!-- Other customization options -->
             </div>
-            <div class="customize-controls">
+            <div >
     <h5>Ajouter une note :</h5>
     <input type="text" class="your-custom-class">
 </div>
