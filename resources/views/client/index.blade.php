@@ -71,7 +71,7 @@
               </div>
               <!-- Other customization options -->
             </div>
-            <div >
+  
             <div class="customize-controls">
               <div class="qty">
                 <span class="qty-subtract"><i class="fas fa-minus"></i></span>
@@ -85,10 +85,7 @@
              
             </div>
 			
-            <div class="note-section">
-          <label for="userNote">Une note avant de confirmer:</label>
-          <textarea id="userNote" name="userNote" rows="4" placeholder="Ajouter une note..."></textarea>
-        </div>
+      
            </div>
 				
         </div>
