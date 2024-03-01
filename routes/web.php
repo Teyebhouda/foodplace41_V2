@@ -59,7 +59,7 @@ use App\Http\Controllers\StripePaymentController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
+Route::post('logout', [ClientLoginController::class, 'logout'])->name('client.logout');
 
 Route::post('/checkout1', [CommandController::class, 'store'])->name('client.checkout1.store');
 	Route::get('/contact', [ContactController::class, 'showContactForm'])->name('contact.show');
@@ -124,7 +124,7 @@ Route::post('/contact', [ContactController::class, 'submitContactForm'])->name('
     });
 	   Route::get('/client/login', [ClientLoginController::class, 'showLoginForm'])->name('client.login');
     Route::post('/client/login', [ClientLoginController::class, 'login'])->name('client.login.submit');
-    Route::post('logout', [ClientLoginController::class, 'logout'])->name('client.logout');
+  
     
     Route::get('/client/register', [RegistrationController::class, 'showRegistrationForm'])->name('register');
     Route::post('/client/register', [RegistrationController::class, 'register'])->name('register.submit');
