@@ -103,12 +103,7 @@
 
 
 
-                <a class="btn-book-a-table" id="logout-link" style="margin-right:15px;color: white;font-size: medium" href="#">Déconnecter</a>
-               <form action="<?php echo e(route('client.logout')); ?>" method="POST" id="logout-forum">
-               
-				
-                    <?php echo csrf_field(); ?>
-                </form>
+              
 			
 
 

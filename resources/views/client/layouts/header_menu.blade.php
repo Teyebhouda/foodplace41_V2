@@ -99,10 +99,11 @@
     <strong>Bonjour, {{ auth('clientRestaurant')->user()->FirstName }} {{ auth('clientRestaurant')->user()->LastName }}
 </strong></span>
            <a class="btn-book-a-table" href="{{ url('/edit-profile') }}" style="margin-right:15px;color: white;font-size: medium">Modifier Compte </a>
-
-
-
-              
+			    <a class="btn-book-a-table" id="logout-link" style="margin-right:15px;color: white;font-size: medium" href="#">Déconnexion</a>
+                <form action="{{ route('client.logout') }}" method="POST" id="logout-forum">
+                    @csrf
+                </form>
+			  
 			
 
 
@@ -149,6 +150,7 @@
         <div class="header-controls">
           <ul class="header-controls-inner">
             <li class="cart-dropdown-wrapper cart-trigger">
+				 <span>Panier</span>
               <span class="cart-item-count">{{ $cart ? count($cart) : 0 }}</span>
               <i class="flaticon-shopping-bag" style="color: white;"></i>
             </li>
@@ -168,7 +170,7 @@
     </div>
 </header>
 <!-- Subheader Start -->
-
+    @if ($client)
   <div class="subheader  dark-overlay-2" style="background-image: url('{{ asset($client->Slide_photo) }}')">
     <div class="container">
       <div class="subheader-inner">
@@ -180,3 +182,9 @@
 
     </div>
   </div>
+@else
+ <li class="menu-item">
+            <a href="{{ url('/store') }}"style="font-size: 20px;">Menu</a>
+          </li>
+			
+ @endif
