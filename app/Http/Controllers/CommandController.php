@@ -201,6 +201,13 @@ public function editCart(Request $request)
         } else {
         }
     }
+
+
+    if($client->min_commande > $totalPrice){
+        return redirect('/store');
+       // return view('client.checkout_success', compact('client','cart', 'cartItemCount', 'livraisons'));
+    }
+
 	    
  $totalPrice = number_format($totalPrice, 2);
  $TVA = ($totalPrice * 20) / 100;

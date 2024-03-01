@@ -192,7 +192,15 @@
                                                 <input type="file" id="imagecategory" name="imagecategory" accept="image/*" class="form-control">
                                             </div>
                                        
+                                            <div class="form-group">
+                                        <label for="image">Minimum Commande :</label>
+                                            
+                                                <input type="number" id="min_cmd" name="min_cmd" class="form-control" required>
+                                            </div>
+
+
                                         <br>
+                                        
 
                                             <button type="submit" class="btn btn-primary" name="submit">Mettre à jour le restaurant</button>
                                         </form>

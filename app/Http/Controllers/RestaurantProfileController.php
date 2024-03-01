@@ -130,7 +130,7 @@ class RestaurantProfileController extends Controller
             $client->localisation = $request->input('localisation');
             $client->N_Siret = $request->input('N_Siret');
             $client->N_Tva = $request->input('N_Tva');
-
+            $client->min_commande = $request->input('min_cmd');
            // $client->email = $request->input('email');
            // $client->password = Hash::make($request->input('password'));
             $client->save();

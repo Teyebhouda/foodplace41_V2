@@ -29,6 +29,7 @@ class Client extends Model
         'N_Tva',
         'user_id',
 		'reservation_table',
+        'min_commande',
     ];
     public function user()
     {
