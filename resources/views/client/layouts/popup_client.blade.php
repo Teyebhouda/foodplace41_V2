@@ -117,7 +117,7 @@
 <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
 
 
-@if(!session('showPopup'))
+@if(session('showPopup'))
   <!-- Popup Start -->
 <div class="popup-overlay"></div>
 
