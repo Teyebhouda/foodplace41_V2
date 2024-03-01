@@ -150,7 +150,7 @@
         <div class="header-controls">
           <ul class="header-controls-inner">
             <li class="cart-dropdown-wrapper cart-trigger">
-				 <span>Panier**</span>
+				 <span>Panier </span>
               <span class="cart-item-count">{{ $cart ? count($cart) : 0 }}</span>
               <i class="flaticon-shopping-bag" style="color: white;"></i>
             </li>
