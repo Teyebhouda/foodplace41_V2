@@ -416,11 +416,11 @@ Route::get('/',  [ProductsController::class, 'index'])->name('client.products.in
 
 Route::get('/home', function () {
     if (auth()->check() && auth()->user()->is_admin == 1) {
-            return redirect("http://localhost:8000/admin/clients");
+            return redirect("https://foodplace41.fr/admin/clients");
     
     } elseif (auth()->check() && auth()->user()->is_admin == 0) {
 
-        return redirect("http://localhost:8000/restaurant/home");
+        return redirect("https://foodplace41.fr/login");
 
 
       /*  if (auth()->check() && auth()->user()->is_admin == 0) {
