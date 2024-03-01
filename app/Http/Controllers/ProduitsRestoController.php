@@ -166,13 +166,16 @@ public function getAllProducts() {
         ->where('produit_familleoptions_restaurant.id_produit_rest', $id)
         ->get();*/
     
+       
         $selectedFamilleOptions = $produit->familleOptions->pluck('id')->toArray();
+        $currentOptions = ProduitsFOptionsrestaurant::select('produit_familleoptions_restaurant.id_produit_rest', 'produit_familleoptions_restaurant.id_familleoptions_rest', 'produit_familleoptions_restaurant.RowN')
+        ->join('produits_restaurant', 'produit_familleoptions_restaurant.id_produit_rest', '=', 'produits_restaurant.id')
+        ->where('produit_familleoptions_restaurant.id_produit_rest', $id)
+        ->get();
+       $temporaryOrder = $currentOptions->pluck('RowN', 'id_familleoptions_rest')->toArray();
+            return view('restaurant.produits.edit', compact('produit', 'categories', 'familleOptions', 'selectedFamilleOptions', 'currentOptions', 'temporaryOrder'));
        
-       
-            return view('restaurant.produits.edit', compact('produit', 'categories', 'familleOptions', 'selectedFamilleOptions'));
-       
-         }
-
+        }
     /**
      * Update the specified resource in storage.
      */
@@ -200,6 +203,7 @@ public function getAllProducts() {
         $produit->nom_produit = $request->nom_produit;
         $produit->description = $request->description;
         $produit->prix = $request->prix;
+		 $produit->status = $request->status;
         $produit->categorie_rest_id = $request->categorie_id;
        
        
@@ -209,14 +213,32 @@ public function getAllProducts() {
         
         $familleOptions = $request->input('famille_options');
         if ($familleOptions) {
+			$temporaryOrder = json_decode($request->temporary_order, true);
+			//dd($familleOptions);
             $produit->familleOptions()->sync($familleOptions);
         }
+		else{
+		
+	 ProduitsFOptionsrestaurant::where('id_produit_rest', $produit->id)
+                       
+                        ->delete();
+		}
     
-       
+         $options= ProduitsFOptionsrestaurant::where('id_produit_rest', $produit->id)->get();;
+    //dd($childs);
+    if($options != null){
+      foreach($options as $option) {
+        //dd($child->child_id, $temporaryOrder);
+        
+        $option->RowN = $temporaryOrder[$option->id_familleoptions_rest];
+        $option->save();
+        //dd($temporaryOrder);
+
+      }  
+	}
       
         return redirect()->route('restaurant.produits.index')->with('success', 'Produit modifié avec succès.');
-              
-       
+          
     }
 
     public function updatestatus(Request $request)
