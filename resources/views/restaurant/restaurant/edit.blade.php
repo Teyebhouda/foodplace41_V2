@@ -195,7 +195,7 @@
                                             <div class="form-group">
                                         <label for="image">Minimum Commande :</label>
                                             
-                                                <input type="number" id="min_cmd" name="min_cmd" class="form-control" required>
+                                                <input type="number" id="min_cmd" name="min_cmd" class="form-control" value="{{ $client->min_commande }}" required>
                                             </div>
 
 
