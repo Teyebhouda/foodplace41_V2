@@ -99,6 +99,8 @@
     <strong>Bonjour, {{ auth('clientRestaurant')->user()->FirstName }} {{ auth('clientRestaurant')->user()->LastName }}
 </strong></span>
            <a class="btn-book-a-table" href="{{ url('/edit-profile') }}" style="margin-right:15px;color: white;font-size: medium">Modifier Compte </a>
+           <a class="btn-book-a-table" href="{{ url('/logout') }}" style="margin-right:15px;color: white;font-size: medium">Déconnexion </a>
+          
            <form action="{{ route('client.logout') }}" method="POST">
             @csrf
             <button type="submit" class="btn-book-a-table">Déconnexion</button>
