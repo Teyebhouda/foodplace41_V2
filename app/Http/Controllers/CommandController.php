@@ -204,6 +204,8 @@ public function editCart(Request $request)
 
 
     if($client->min_commande > $totalPrice){
+        echo "<script>toastr.error('Désolé,La commande minimale($totalPrice) n'est pas atteinte.Veuillez ajouter plus d'articles à votre panier. Merci.');</script>";
+  
         return redirect('/store');
        // return view('client.checkout_success', compact('client','cart', 'cartItemCount', 'livraisons'));
     }
