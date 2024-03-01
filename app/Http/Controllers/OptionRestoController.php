@@ -82,7 +82,11 @@ class OptionRestoController extends Controller
         return redirect()->back()->with('success', 'Option supprimée avec succès!');
     }
     public function edit(OptionsRestaurant $option)
-    {  $userId = Auth::id();
+    { 
+
+        $restaurant_id = env('Restaurant_id');
+        
+        $userId = Auth::id();
         $user = User::find($userId);
         if ($user) {
         
