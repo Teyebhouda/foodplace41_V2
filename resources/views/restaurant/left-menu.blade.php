@@ -60,14 +60,7 @@
       <li class="nav-item nav-category">
         <span class="nav-link">Navigation</span>
       </li>
-      <li class="nav-item menu-items">
-        <a class="nav-link" href="{{ url('admin/') }}">
-          <span class="menu-icon">
-            <i class="mdi mdi-speedometer"></i>
-          </span>
-          <span class="menu-title">Tableau de bord</span>
-        </a>
-      </li>
+     
      
 
       <li class="nav-item menu-items home clients" id="u-Restaurants">
@@ -80,7 +73,7 @@
         </a>
         <div class="collapse" id="ui-Restaurants">
           <ul class="nav flex-column sub-menu">
-            <li class="nav-item"> <a class="nav-link" href="{{ url('restaurant/') }}">Liste Commandes</a></li>
+            <li class="nav-item"> <a class="nav-link" href="{{ url('restaurant/') }}">Liste de Commandes</a></li>
           </ul>
         </div>
       </li>
@@ -118,8 +111,8 @@
         </a>
         <div class="collapse" id="ui-Utilisateurs">
           <ul class="nav flex-column sub-menu">
-            <li class="nav-item"> <a class="nav-link" href="{{ route('restaurant.clients.index') }}">Liste Clients</a></li>
-            <li class="nav-item"> <a class="nav-link" href="{{ route('restaurant.clients.create') }}">Ajouter Clients</a></li>
+            <li class="nav-item"> <a class="nav-link" href="{{ route('restaurant.clients.index') }}">Liste de Clients</a></li>
+            <li class="nav-item"> <a class="nav-link" href="{{ route('restaurant.clients.create') }}">Ajouter Client</a></li>
 
           </ul>
         </div>
@@ -135,7 +128,7 @@
         </a>
         <div class="collapse" id="ui-Categories">
           <ul class="nav flex-column sub-menu">
-            <li class="nav-item"> <a class="nav-link" href="{{ route('restaurant.categories.index') }}">Liste Categories</a></li>
+            <li class="nav-item"> <a class="nav-link" href="{{ route('restaurant.categories.index') }}">Liste de  Categories</a></li>
            <li class="nav-item"> <a class="nav-link" href="{{ route('restaurant.categories.create') }}">Ajouter Categorie</a></li>
           </ul>
         </div>
@@ -159,7 +152,7 @@
               <a class="nav-link" href="{{ route('restaurant.famille-options.create') }}">Ajouter Famille d'Option</a>
           </li>
           <li class="nav-item">
-              <a class="nav-link" href="{{ route('restaurant.options.index') }}">Liste Options</a>
+              <a class="nav-link" href="{{ route('restaurant.options.index') }}">Liste de Options</a>
           </li>
           <li class="nav-item">
               <a class="nav-link" href="{{ route('restaurant.options.create') }}">Ajouter Option</a>
@@ -180,7 +173,7 @@
         <div class="collapse" id="ui-paiment">
         <ul class="nav flex-column sub-menu">
          
-          <li class="nav-item"><a class="nav-link" href="{{ route('restaurant.paiment.index') }}">List  Méthodes Paiements</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ route('restaurant.paiment.index') }}">Méthodes Paiements</a></li>
           <li class="nav-item"><a class="nav-link" href="{{ route('restaurant.paiment.create') }}">Ajouter  Méthode Paiement</a></li>
         </ul>
         </div>
@@ -195,7 +188,7 @@
         </a>
         <div class="collapse" id="ui-livraison">
         <ul class="nav flex-column sub-menu">
-          <li class="nav-item"> <a class="nav-link" href="{{ route('restaurant.livraison.index') }}">Liste Méthode Livraison</a></li>
+          <li class="nav-item"> <a class="nav-link" href="{{ route('restaurant.livraison.index') }}">Méthodes Livraisons</a></li>
           <li class="nav-item"> <a class="nav-link" href="{{ route('restaurant.livraison.create') }}">Ajouter Méthode Livraison</a></li>
           </ul>
         </div>
