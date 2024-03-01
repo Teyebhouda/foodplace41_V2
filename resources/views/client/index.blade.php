@@ -72,14 +72,16 @@
               <!-- Other customization options -->
             </div>
             <div class="customize-controls">
+    <h5>Ajouter une note :</h5>
+    <input type="text" class="your-custom-class">
+</div>
+            <div class="customize-controls">
               <div class="qty">
                 <span class="qty-subtract"><i class="fas fa-minus"></i></span>
               <input type="number"   name="totalquantity"  id="totalquantity" value="1" min="1" readonly>
               <span class="qty-add"><i class="fas fa-plus"></i></span>
               </div>
-              <div class="customize-total" >
-                <h5 >Ajouter une note : <span class="final-price custom-primary"> <span>€</span> </span> </h5>
-              </div>
+             
               <div class="customize-total" >
                 <h5 >Prix : <span class="final-price custom-primary"> <span>€</span> </span> </h5>
               </div>
