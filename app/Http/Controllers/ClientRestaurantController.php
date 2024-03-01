@@ -16,7 +16,10 @@ class ClientRestaurantController  extends Controller
     public function index()
     {
        
-        $restaurant_id = env('Restaurant_id');
+        $userId = Auth::id();
+        $user = User::find($userId);
+        if ($user) {
+        
         $restaurant = $user->restaurant;
 
         $clients = ClientRestaurat::where('restaurant_id', $restaurant_id)->paginate(10);
@@ -26,6 +29,7 @@ class ClientRestaurantController  extends Controller
         
         return view('restaurant.clients.index', compact('clients'));
     }
+}
 
     // Show the form for creating a new resource.
     public function create()

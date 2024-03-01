@@ -57,7 +57,7 @@
     <p style="font-size: 18px;">Cher(e) <strong>{{ $clientFirstName }} {{ $clientLastName }}</strong>,</p>
     <p style="font-size: 18px;">Votre réservation du table<strong>N° {{ $reservationId }}</strong> est confirmée avec succès. Merci de nous avoir choisis !</p>
     <!-- Ajoutez plus de détails de commande au besoin -->
-    <p style="font-size: 18px;">Cordialement, <br> L'equipe de {{ $restaurant }}.</p>
+    <p style="font-size: 18px;">Cordialement.</p>
 </body>
 
 	
