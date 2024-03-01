@@ -123,6 +123,6 @@
 
     <h2>Nous sommes impatients de vous servir à nouveau.</h2>
 
-    <p style="font-size: 16px;">Cordialement,<br>L'équipe de Orlando's Café  .</p>
+    <p style="font-size: 16px;">Cordialement,<br>L'équipe de Foodplace41  .</p>
 </body>
 </html>
