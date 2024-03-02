@@ -44,7 +44,22 @@
 	  .product-thumb img.customizeBtn {
     cursor: pointer;
 }
-	  
+.note-section {
+    margin-top: 20px;
+  }
+
+  .note-section label {
+    font-weight: bold;
+  }
+
+  .note-section textarea {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    resize: vertical; /* Allow vertical resizing of the textarea */
+  }
       </style>
   <!-- Banner End -->
  <!-- Customize Modal Start -->
@@ -84,7 +99,10 @@
               </div>
              
             </div>
-			
+            <div class="note-section">
+          <label for="userNote">Une note avant de confirmer:</label>
+          <textarea id="userNote" name="userNote" rows="4" placeholder="Ajouter une note..."></textarea>
+        </div>
       
            </div>
 				

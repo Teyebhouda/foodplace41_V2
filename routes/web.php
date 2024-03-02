@@ -420,7 +420,7 @@ Route::get('/home', function () {
     
     } elseif (auth()->check() && auth()->user()->is_admin == 0) {
 
-        return redirect("https://foodplace41.fr/login");
+        return redirect("https://foodplace41.fr/restaurant/home?1");
 
 
       /*  if (auth()->check() && auth()->user()->is_admin == 0) {
