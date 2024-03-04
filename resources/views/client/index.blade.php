@@ -1331,7 +1331,8 @@ function getSelectedOptions() {
 
   designation += '\n' + uppercaseSupplementaires + '\n' + optionsWithPrice.trim();
   // Add the note to the designation
-  designation += '\nNote: ' + productNote;
+  if(productNote !== '' ){
+  designation += '\nNote: ' + productNote;}
 selectedOptionsproduits = [];
   return designation;
 }
