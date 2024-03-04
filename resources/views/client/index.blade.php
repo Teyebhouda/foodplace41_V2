@@ -780,7 +780,7 @@ var selectedOptionsSupplementaires = [];
 // Check if productOptions is defined and not empty
 if (productOptions !== undefined && productOptions.trim() !== '') {
   // Split the 'productOptions' into an array
-  var optionsArray = productOptions.split('SUPPLÉMENTAIRES');
+  var optionsArray = productOptions.split('/');
 
   // Separate the options into two variables
   var nonSupplementairesArray = optionsArray[0].trim();
@@ -1318,7 +1318,7 @@ function getSelectedOptions() {
   });
 
   // Convert "supplémentaires" to uppercase
-  var uppercaseSupplementaires = 'SUPPLÉMENTAIRES';
+  var uppercaseSupplementaires = '/';
   var productNote = $('#userNote').val();
 
   // Combine the options
