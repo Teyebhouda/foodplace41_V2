@@ -54,6 +54,7 @@ class CommandController extends Controller
     $productPrice = $cartItem['price'];
     $productUnityPrice = $cartItem['unityPrice'];
     $productQuantity= $cartItem['quantity'];
+   
     $customizationOptions = isset($cartItem['options']) ? $cartItem['options'] : null; 
 
     if (!isset($cartItem['options'])) {
@@ -72,6 +73,7 @@ class CommandController extends Controller
            'price' => $productPrice,
            'unityPrice' => $productUnityPrice,
            'quantity' => $productQuantity,
+          
           
           
          //  'options' => $customizationOptions

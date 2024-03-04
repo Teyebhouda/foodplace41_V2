@@ -44,9 +44,9 @@
                                                     <td>{{ $familleOption->type }}</td>
                                                     <td>
                                                         <a href="{{ route('restaurant.famille-options.options', $familleOption->id) }}" class="btn btn-success">Options de cette Famille Option</a>
-                                                       
                                                     </td>
-                                                    <td>
+                                                        
+                                                   <td>
                                                         <a href="{{ route('restaurant.options.create', ['famille_option_id' => $familleOption->id]) }}" class="btn btn-success">Ajouter une Option</a>
                                                         <a href="{{ route('restaurant.famille-options.edit', $familleOption->id) }}" class="btn btn-primary">Modifier</a>
                                                         <form action="{{ route('restaurant.famille-options.destroy', $familleOption->id) }}" method="POST" style="display: inline-block;">

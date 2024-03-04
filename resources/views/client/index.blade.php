@@ -101,7 +101,7 @@
             </div>
             <div class="note-section">
           <label for="userNote">Une note avant de confirmer:</label>
-          <textarea id="userNote" name="userNote" rows="4" placeholder="Ajouter une note..."></textarea>
+          <textarea id="userNote" name="userNote" rows="3" placeholder="Ajouter une note..."></textarea>
         </div>
       
            </div>
@@ -728,6 +728,8 @@ if (encodedString !== null && encodedString !== undefined && (typeof encodedStri
             $('.customize-variations').empty();
             $('.custom-primary').empty();
             $('.final-price.custom-primary').empty();
+
+            $('.note-section textarea').val('');
             // Update the modal content with the returned data
             
             $('.customize-title').html(response.product.nom_produit + ' <span class="custom-primary">'  + response.product.prix + '€</span>');
@@ -1182,6 +1184,7 @@ $(document).ready(function() {
   var productPrice =  parseFloat(priceTotal.text().replace('€', ''));
   var productUnityPrice = response.product.prix;
   var productQuantity = $('#totalquantity').val();
+
   var customizationOptions = getSelectedOptions(); // Implement the logic to retrieve the selected options
   
   // Construct the cart item data to send to the server
@@ -1196,6 +1199,7 @@ if (productIdEdit !== undefined) {
     price: productPrice,
     unityPrice: productUnityPrice,
     quantity: productQuantity,
+   
     options: customizationOptions };
 	
       editCart(cartItem);
@@ -1213,7 +1217,7 @@ var productIditem = generateUUID();
 		
 		 var cartItem = {
     id: productId,
-	idItem: productIditem,
+	  idItem: productIditem,
     name: productName,
     image: productImage,
     price: productPrice,
@@ -1315,14 +1319,19 @@ function getSelectedOptions() {
 
   // Convert "supplémentaires" to uppercase
   var uppercaseSupplementaires = 'SUPPLÉMENTAIRES';
+  var productNote = $('#userNote').val();
 
   // Combine the options
   var designation = optionsWithoutPrice.trim();
-  if (designation !== '' && optionsWithPrice !== '') {
+ /* if (designation !== '' && optionsWithPrice !== '') {
     designation += '\n' + uppercaseSupplementaires + '\n' + optionsWithPrice.trim();
   } else {
     designation += optionsWithPrice.trim();
-  }
+  }*/
+
+  designation += '\n' + uppercaseSupplementaires + '\n' + optionsWithPrice.trim();
+  // Add the note to the designation
+  designation += '\nNote: ' + productNote;
 selectedOptionsproduits = [];
   return designation;
 }

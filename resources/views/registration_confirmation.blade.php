@@ -34,7 +34,7 @@
 <body>
     <h1>Bienvenue, {{ $clientFirstName }} {{ $clientLastName }} !</h1>
 
-    <p>Nous sommes ravis de vous informer que votre inscription a été confirmée avec succès sur Orlando's Café  .</p>
+    <p>Nous sommes ravis de vous informer que votre inscription a été confirmée avec succès sur FoodPlace41  .</p>
 
     <p>Votre compte a été créé avec les informations suivantes :</p>
 
