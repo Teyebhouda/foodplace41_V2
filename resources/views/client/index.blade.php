@@ -101,7 +101,7 @@
             </div>
             <div class="note-section">
           <label for="userNote">Une note avant de confirmer:</label>
-          <textarea id="userNote" name="userNote" rows="3" placeholder="Ajouter une note..."></textarea>
+          <textarea id="userNote" name="userNote" rows="2" placeholder="Ajouter une note..."></textarea>
         </div>
       
            </div>
