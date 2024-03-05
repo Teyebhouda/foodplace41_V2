@@ -168,7 +168,7 @@
     </div>
 </header>
 <!-- Subheader Start -->
-@if(!request()->is('/'))
+@if(request()->is('/'))
     @if ($client)
    
   <div class="subheader  dark-overlay-2" style="background-image: url('{{ asset($client->Slide_photo) }}')">
