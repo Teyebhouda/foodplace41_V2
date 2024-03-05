@@ -234,7 +234,7 @@ $PaymentMethode = PaimentMethod::findOrFail($paymentMethodId);
 	
         if ($userId) {
             $Userloggedin = ClientRestaurat::findOrFail($userId);
-			dd($Userloggedin);
+			
 			
 			
 $Command = new Command;
