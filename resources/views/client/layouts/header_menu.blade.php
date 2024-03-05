@@ -168,7 +168,9 @@
     </div>
 </header>
 <!-- Subheader Start -->
+@if(!request()->is('/'))
     @if ($client)
+   
   <div class="subheader  dark-overlay-2" style="background-image: url('{{ asset($client->Slide_photo) }}')">
     <div class="container">
       <div class="subheader-inner">
@@ -185,4 +187,5 @@
             <a href="{{ url('/store') }}"style="font-size: 20px;">Menu</a>
           </li>
 			
+ @endif
  @endif

@@ -55,7 +55,20 @@ class ProductsController  extends controller
     
         return view('client.index', compact('client', 'products', 'categories', 'livraisons', 'firstProducts', 'familleOptions', 'cart', 'paginator'));
     }
-    
+    public function home()
+    {
+        $restaurant_id = env('Restaurant_id');
+
+        $client = Client::where('id', $restaurant_id)->firstOrFail();
+        $cart = session()->get('cart', []);
+        $livraisons = LivraisonRestaurant::where('restaurant_id', $restaurant_id)->get();
+        return view('client.home', compact('client', 'livraisons','cart'));
+
+
+    }
+
+
+
 
     
 }

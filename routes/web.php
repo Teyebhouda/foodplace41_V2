@@ -479,3 +479,5 @@ Route::get('/login/facebook/callback', [LoginController::class, 'handleFacebookC
 
 
     Route::get('/store', [ProductsController::class, 'index'])->name('client.products.index');
+
+    
