@@ -231,10 +231,10 @@ $PaymentMethode = PaimentMethod::findOrFail($paymentMethodId);
 
 		
 		$userId = auth()->guard('clientRestaurant')->id();
-	dd($userId);
+	
         if ($userId) {
             $Userloggedin = ClientRestaurat::findOrFail($userId);
-			
+			dd($Userloggedin);
 			
 			
 $Command = new Command;
